@@ -174,8 +174,8 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--tp);min-he
         <button class="inv-copy-pill" id="codeBtn" type="button" disabled>Unavailable</button>
       </div>
       <div class="inv-link-row">
-        <span class="inv-link" id="refLink">Referral actions are currently unavailable</span>
-        <button class="inv-link-copy" type="button" disabled>Unavailable</button>
+        <span class="inv-link" id="refLink"></span>
+        <button class="inv-link-copy" type="button" onclick="copyLink()">Copy</button>
       </div>
     </div>
   </div>
@@ -291,6 +291,8 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--tp);min-he
 </div>
 <div class="foot"></div>
 <script>
+const baseUrl = location.origin;
+document.getElementById('refLink').textContent = baseUrl + '/register.php?ref=' + encodeURIComponent(document.getElementById('invCode').textContent.trim());
 async function loadTeam() {
   // Read-only frontend: referral and commission APIs remain disabled.
 }
