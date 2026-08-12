@@ -372,7 +372,7 @@ body {
     <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
     <div class="lp-top">
         <div class="brand">
-            <img class="brand-logo-img"  src="images/logotree.png" alt="Dollar Tree">
+            <img class="brand-logo-img" src="/user/images/logotree.png?v=20260812" alt="Dollar Tree">
         </div>
     </div>
     <div class="lp-mid">
@@ -394,7 +394,7 @@ body {
     <div class="mobile-header">
         <div class="grid-bg"></div>
         <div class="bran">
-            <img class="brand-logo-img"  src="images/logotree.png" alt="Dollar Tree">
+            <img class="brand-logo-img" src="/user/images/logotree.png?v=20260812" alt="Dollar Tree">
             <div class="mh-title">Grow your wealth<br>with <span class="ac">daily returns.</span></div>
             <p class="mh-sub">Investor portal — secure & transparent</p>
         </div>
