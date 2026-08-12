@@ -82,6 +82,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--tp);min-he
 .inv-copy-pill{background:var(--gp);color:#fff;border:none;padding:5px 16px;border-radius:100px;font-family:'Barlow',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .18s;}
 .inv-copy-pill:hover{background:var(--gb);}
 .inv-copy-pill.copied{background:#0d4d0d;}
+.inv-copy-pill:disabled,.inv-link-copy:disabled{opacity:.55;cursor:not-allowed;}
 .inv-link-row{display:flex;align-items:center;gap:10px;}
 .inv-link{font-size:12px;color:rgba(255,255,255,.38);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
 .inv-link-copy{background:rgba(26,122,26,.3);color:#7be87b;border:1px solid rgba(26,122,26,.48);padding:5px 13px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;transition:all .18s;}
@@ -170,11 +171,11 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--tp);min-he
       <div class="inv-label"><i class="fa-solid fa-star"></i> Invitation code：</div>
       <div class="inv-code-row">
         <span class="inv-code" id="invCode"><?php echo htmlspecialchars($user['referral_code']); ?></span>
-        <button class="inv-copy-pill" id="codeBtn" onclick="copyCode()">Copy</button>
+        <button class="inv-copy-pill" id="codeBtn" type="button" disabled>Unavailable</button>
       </div>
       <div class="inv-link-row">
-        <span class="inv-link" id="refLink">Share your referral link and start earning</span>
-        <button class="inv-link-copy" onclick="copyLink()">Copy</button>
+        <span class="inv-link" id="refLink">Referral actions are currently unavailable</span>
+        <button class="inv-link-copy" type="button" disabled>Unavailable</button>
       </div>
     </div>
   </div>
@@ -231,7 +232,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--tp);min-he
     <div class="lvl-content">
       <div class="lvl-name">LEVEL 1</div>
       <div class="lvl-row"><div class="lvl-rl">Register/Valid</div><div class="lvl-rv" id="l1reg">0/0</div></div>
-      <div class="lvl-row"><div class="lvl-rl">Commission Percentage</div><div class="lvl-rv accent">14%</div></div>
+      <div class="lvl-row"><div class="lvl-rl">Commission</div><div class="lvl-rv accent">Unavailable</div></div>
       <div class="lvl-row"><div class="lvl-rl">Total Income</div><div class="lvl-rv" id="l1inc">0</div></div>
     </div>
     <!--<button class="lvl-btn" onclick="viewLevel(1)">Details</button>-->
@@ -251,7 +252,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--tp);min-he
     <div class="lvl-content">
       <div class="lvl-name">LEVEL 2</div>
       <div class="lvl-row"><div class="lvl-rl">Register/Valid</div><div class="lvl-rv" id="l2reg">0/0</div></div>
-      <div class="lvl-row"><div class="lvl-rl">Commission Percentage</div><div class="lvl-rv accent">2%</div></div>
+      <div class="lvl-row"><div class="lvl-rl">Commission</div><div class="lvl-rv accent">Unavailable</div></div>
       <div class="lvl-row"><div class="lvl-rl">Total Income</div><div class="lvl-rv" id="l2inc">0</div></div>
     </div>
     <!--<button class="lvl-btn" onclick="viewLevel(2)">Details</button>-->
@@ -271,7 +272,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--tp);min-he
     <div class="lvl-content">
       <div class="lvl-name">LEVEL 3</div>
       <div class="lvl-row"><div class="lvl-rl">Register/Valid</div><div class="lvl-rv" id="l3reg">0/0</div></div>
-      <div class="lvl-row"><div class="lvl-rl">Commission Percentage</div><div class="lvl-rv accent">1%</div></div>
+      <div class="lvl-row"><div class="lvl-rl">Commission</div><div class="lvl-rv accent">Unavailable</div></div>
       <div class="lvl-row"><div class="lvl-rl">Total Income</div><div class="lvl-rv" id="l3inc">0</div></div>
     </div>
     <!--<button class="lvl-btn" onclick="viewLevel(3)">Details</button>-->
@@ -290,30 +291,8 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--tp);min-he
 </div>
 <div class="foot"></div>
 <script>
-const token = localStorage.getItem('auth_token') || '';
-const baseUrl = location.origin;
-document.getElementById('refLink').textContent = baseUrl + '/dollar-tree-platform/user/register.php?ref=' + document.getElementById('invCode').textContent.trim(); 
 async function loadTeam() {
-  try {
-   const r = await fetch('../api/get_team_info.php', { 
-  credentials: 'include',
-  headers: { 'Authorization': 'Bearer ' + token } 
-});
-    const d = await r.json();
-    if (!d.success) return;
-    const td = d.data;
-    document.getElementById('teamSize').textContent = td.team_size ?? 0;
-    document.getElementById('teamRecharge').textContent = '$' + parseFloat(td.team_recharge ?? 0).toFixed(2);
-    document.getElementById('teamWithdrawal').textContent = '$' + parseFloat(td.team_withdrawal ?? 0).toFixed(2);
-    document.getElementById('newTeam').textContent = td.new_team ?? 0;
-    document.getElementById('firstRecharge').textContent = td.first_recharge ?? 0;
-    document.getElementById('firstWithdrawal').textContent = td.first_withdrawal ?? 0;
-    ['1','2','3'].forEach(n => {
-      const lv = td['level'+n] ?? {};
-      document.getElementById('l'+n+'reg').textContent = (lv.registered??0)+'/'+(lv.valid??0);
-      document.getElementById('l'+n+'inc').textContent = parseFloat(lv.income??0).toFixed(2);
-    });
-  } catch(e) { console.error(e); }
+  // Read-only frontend: referral and commission APIs remain disabled.
 }
 function copyCode() {
   copy(document.getElementById('invCode').textContent.trim(), 'codeBtn', 'Code copied!');
