@@ -5,8 +5,10 @@ require_login();
 
 $user = get_logged_in_user();
 $page_title = t('recharge', 'Recharge');
-$api_token = $user['auth_token'];
-$depositAssets = $pdo->query("SELECT canonical_code,symbol,asset_name,network_name FROM deposit_asset_catalog WHERE provider_enabled=1 AND deposits_enabled=1 ORDER BY sort_priority,symbol,network_name")->fetchAll(PDO::FETCH_ASSOC);
+$api_token = '';
+// Deposits remain disabled. Keep the frontend route available without querying
+// provider-backed asset configuration or exposing address-generation controls.
+$depositAssets = [];
 $coinIcons = [
     'USDT'=>'tether-usdt','BTC'=>'bitcoin-btc','ETH'=>'ethereum-eth','BNB'=>'bnb-bnb',
     'TRX'=>'tron-trx','LTC'=>'litecoin-ltc','DOGE'=>'dogecoin-doge','USDC'=>'usd-coin-usdc',
@@ -133,6 +135,7 @@ include __DIR__ . '/spin_wheel.php';
             color:var(--green);
         }
         .network-btn i { font-size:13px; }
+        .network-btn:disabled { opacity:.55; cursor:not-allowed; }
         .coin-icon {
             width:24px; height:24px; flex:0 0 24px; object-fit:contain;
             filter:drop-shadow(0 1px 2px rgba(0,0,0,.14));
@@ -338,20 +341,23 @@ include __DIR__ . '/spin_wheel.php';
 <!-- Network Selector -->
 <div class="section">
     <div class="section-label"><i class="fa-solid fa-network-wired"></i><?php echo t('select_network','Select Network'); ?></div>
+    <div style="margin-bottom:14px;padding:13px 15px;border:1px solid #d8e8d8;border-radius:12px;background:#f4f9f4;color:#486548;font-size:14px;">
+        <i class="fa-solid fa-circle-info"></i> Deposits are currently unavailable.
+    </div>
     <div class="network-grid legacy-network-grid">
-        <button class="network-btn" onclick="selectNetwork('TRON',this)">
+        <button class="network-btn" type="button" disabled>
             <i class="fa-solid fa-circle-nodes"></i> TRC20 · USDT
         </button>
-        <button class="network-btn" onclick="selectNetwork('BSC',this)">
+        <button class="network-btn" type="button" disabled>
             <i class="fa-solid fa-circle-nodes"></i> BEP20 · USDT
         </button>
-        <button class="network-btn" onclick="selectNetwork('ETH',this)">
+        <button class="network-btn" type="button" disabled>
             <i class="fa-brands fa-ethereum"></i> ERC20 · USDT
         </button>
-        <button class="network-btn" onclick="selectNetwork('POLYGON',this)">
+        <button class="network-btn" type="button" disabled>
             <i class="fa-solid fa-circle-nodes"></i> POLYGON · USDT
         </button>
-        <button class="network-btn" onclick="selectNetwork('TON',this)">
+        <button class="network-btn" type="button" disabled>
             <i class="fa-solid fa-gem"></i> TON &middot; USDT
         </button>
     </div>
@@ -497,41 +503,7 @@ include __DIR__ . '/spin_wheel.php';
 
     /* ── Get deposit address ── */
     async function getDepositAddress(assetCode) {
-        document.getElementById('loading').style.display = 'block';
-        document.getElementById('depositInfo').style.display = 'none';
-        if (pollingInterval) clearInterval(pollingInterval);
-
-        try {
-            const response = await fetch('../api/get_deposit_address.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'X-User-Token': authToken },
-                body: JSON.stringify({ asset_code: assetCode })
-            });
-            const data = await response.json();
-            if (data.success && data.data.address) {
-                currentAddress   = data.data.address;
-                currentAddressId = data.data.address_id;
-                document.getElementById('depositAddress').textContent = currentAddress;
-                var memo = data.data.memo || '';
-                document.getElementById('depositMemo').textContent = memo;
-                document.getElementById('memoSection').style.display = memo ? 'block' : 'none';
-                const qrContainer = document.getElementById('qrcode');
-                qrContainer.innerHTML = '';
-                new QRCode(qrContainer, {
-                    text: currentAddress, width: 180, height: 180,
-                    colorDark: '#000000', colorLight: '#ffffff',
-                    correctLevel: QRCode.CorrectLevel.H
-                });
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('depositInfo').style.display = 'block';
-                startDepositPolling();
-            } else {
-                throw new Error(data.message || 'Failed to get deposit address');
-            }
-        } catch(error) {
-            document.getElementById('loading').style.display = 'none';
-            rcToast('Error', error.message, 'error', 5000);
-        }
+        rcToast('Unavailable', 'Deposits are currently unavailable.', 'error', 4000);
     }
 
     /* ── Copy address ── */
@@ -563,27 +535,6 @@ include __DIR__ . '/spin_wheel.php';
     /* ── Deposit polling ── */
     function startDepositPolling() {
         if (pollingInterval) clearInterval(pollingInterval);
-        pollingInterval = setInterval(async function () {
-            if (!currentAddressId) return;
-            try {
-                const response = await fetch('../api/check_new_deposits.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'X-User-Token': authToken },
-                    body: JSON.stringify({ address_id: currentAddressId })
-                });
-                const data = await response.json();
-                if (data.success && data.data.new_deposits > 0) {
-                    clearInterval(pollingInterval);
-                    rcToast(
-                        'Recharge Received!',
-                        data.data.total_amount + ' USDT has been credited to your account.',
-                        'success',
-                        0   /* keep open until redirect */
-                    );
-                    setTimeout(function () { window.location.href = 'dashboard.php'; }, 2800);
-                }
-            } catch(e) { console.error(e); }
-        }, 5000);
     }
 
     /* ── Init ── */
