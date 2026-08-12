@@ -358,9 +358,14 @@ canvas#spinWheel{position:relative;z-index:2;width:240px;height:240px;border-rad
 
 /* ─── VIP TIERS ON DASHBOARD ─── */
 .tiers-sec{padding:16px 16px 0;}
+.tiers-list{
+  display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:2px 2px 10px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent;
+}
 .tier-card{
   background:var(--white);border:1px solid var(--border);
-  border-radius:var(--r2);margin-bottom:12px;
+  border-radius:var(--r2);margin-bottom:0;flex:0 0 min(380px,calc(100vw - 38px));
+  scroll-snap-align:start;
   box-shadow:var(--sh);overflow:hidden;position:relative;
 }
 .tier-card.is-active{border-color:var(--gl);background:var(--card-active);}
@@ -696,6 +701,7 @@ canvas#spinWheel{position:relative;z-index:2;width:240px;height:240px;border-rad
     <div class="sec-ttl"><i class="fa-solid fa-crown"></i><?php echo t('vip','VIP Levels');?></div>
     <a href="vip.php" style="font-size:11px;font-weight:700;color:var(--gp);text-decoration:none;">View all →</a>
   </div>
+  <div class="tiers-list">
   <?php foreach($tiers as $tier):
     $total_income = $tier['daily_tasks_limit'] * $tier['task_profit_per_completion'] * $tier['contract_duration_days'];
     $is_current = $tier['svip_level'] == $user['svip_level'];
@@ -730,20 +736,20 @@ canvas#spinWheel{position:relative;z-index:2;width:240px;height:240px;border-rad
 
     <div class="tc-stats">
       <div class="tc-stat">
-        <div class="tc-stat-lbl">Daily tasks</div>
-        <div class="tc-stat-val"><?php echo $tier['daily_tasks_limit'];?></div>
+        <div class="tc-stat-lbl">Unlock amount</div>
+        <div class="tc-stat-val"><?php echo number_format($tier['unlock_amount'],2);?><span class="u">USDT</span></div>
       </div>
       <div class="tc-stat">
-        <div class="tc-stat-lbl">Simple interest</div>
-        <div class="tc-stat-val green"><?php echo number_format($tier['task_profit_per_completion'],2);?></div>
+        <div class="tc-stat-lbl">Maximum daily profit</div>
+        <div class="tc-stat-val green"><?php echo number_format($tier['max_daily_profit'],2);?><span class="u">USDT</span></div>
       </div>
       <div class="tc-stat">
-        <div class="tc-stat-lbl">Daily profit</div>
-        <div class="tc-stat-val"><?php echo number_format($tier['max_daily_profit'],2);?><span class="u">USDT</span></div>
+        <div class="tc-stat-lbl">Duration</div>
+        <div class="tc-stat-val"><?php echo (int)$tier['contract_duration_days'];?><span class="u">days</span></div>
       </div>
       <div class="tc-stat">
-        <div class="tc-stat-lbl">Total profit</div>
-        <div class="tc-stat-val green"><?php echo number_format($total_income,2);?><span class="u">USDT</span></div>
+        <div class="tc-stat-lbl">Availability</div>
+        <div class="tc-stat-val green">Display only</div>
       </div>
     </div>
 
@@ -763,6 +769,7 @@ canvas#spinWheel{position:relative;z-index:2;width:240px;height:240px;border-rad
     </div>
   </div>
   <?php endforeach;?>
+  </div>
 </div>
 
 <!-- REFERRAL -->
