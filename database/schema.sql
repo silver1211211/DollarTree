@@ -174,6 +174,7 @@ CREATE TABLE IF NOT EXISTS pending_deposits (
     amount DECIMAL(20, 2) DEFAULT 0.00,
     detected_amount DECIMAL(20, 2) DEFAULT NULL,
     currency VARCHAR(10) DEFAULT 'USDT',
+    network VARCHAR(20) DEFAULT NULL,
     tx_hash VARCHAR(255) DEFAULT NULL,
     status ENUM('pending', 'completed', 'failed', 'expired') DEFAULT 'pending',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -364,13 +365,36 @@ CREATE TABLE IF NOT EXISTS announcements (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
-    announcement_type ENUM('info', 'warning', 'success', 'danger') DEFAULT 'info',
+    announcement_type ENUM('info', 'warning', 'success', 'danger', 'daily_modal') DEFAULT 'info',
+    link_url VARCHAR(500) DEFAULT NULL,
+    link_text VARCHAR(200) DEFAULT NULL,
     is_active BOOLEAN DEFAULT TRUE,
     created_by_admin_id INT DEFAULT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
     INDEX idx_is_active (is_active),
+    INDEX idx_created_at (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ============================================
+-- USER MESSAGES TABLE
+-- Non-financial notifications sent by administrators
+-- ============================================
+CREATE TABLE IF NOT EXISTS user_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT DEFAULT NULL,
+    admin_id INT DEFAULT NULL,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    msg_type ENUM('all', 'svip', 'specific') DEFAULT 'specific',
+    svip_level INT DEFAULT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (admin_id) REFERENCES users(id) ON DELETE SET NULL,
+    INDEX idx_user_read (user_id, is_read),
     INDEX idx_created_at (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
