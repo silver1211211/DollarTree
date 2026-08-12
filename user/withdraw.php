@@ -10,7 +10,9 @@ $today = date('Y-m-d');
 $crawEnteredAt = isset($user['craw_entered_at']) ? $user['craw_entered_at'] : null;
 $crawModeRaw   = isset($user['craw_mode'])       ? (int)$user['craw_mode'] : 0;
 
-if (!empty($crawEnteredAt) && $crawEnteredAt !== $today) {
+// Withdrawal processing is disabled. Keep this page read-only and avoid any
+// task/withdrawal state mutations while the frontend is publicly available.
+if (false && !empty($crawEnteredAt) && $crawEnteredAt !== $today) {
     try {
         if ($crawModeRaw === 1) {
             $pdo->prepare("
@@ -294,10 +296,13 @@ if ($showForm):
 <div class="form-card">
   <div class="form-hd"><i class="fa-solid fa-upload"></i>Withdrawal Details</div>
   <div class="form-body">
+    <div style="margin-bottom:14px;padding:13px 15px;border:1px solid #d8e8d8;border-radius:12px;background:#f4f9f4;color:#486548;font-size:14px;">
+      <i class="fa-solid fa-circle-info"></i> Withdrawals are currently unavailable.
+    </div>
 
     <div class="field">
       <div class="field-label"><i class="fa-solid fa-network-wired"></i>Network</div>
-      <select class="field-input" id="network" onchange="updateFee()">
+      <select class="field-input" id="network" disabled>
         <option value="TRC20">USDT — TRC20 (Tron)</option>
         <option value="BEP20">USDT — BEP20 (BSC)</option>
         <option value="ERC20">USDT — ERC20 (Ethereum)</option>
@@ -307,20 +312,20 @@ if ($showForm):
 
     <div class="field">
       <div class="field-label"><i class="fa-solid fa-wallet"></i>Wallet Address</div>
-      <input type="text" class="field-input" id="walletAddr" placeholder="Enter your USDT wallet address" autocomplete="off" autocorrect="off" spellcheck="false">
+      <input type="text" class="field-input" id="walletAddr" placeholder="Currently unavailable" disabled>
     </div>
 
     <div class="field">
       <div class="field-label"><i class="fa-solid fa-dollar-sign"></i>Amount (USDT)</div>
       <div class="amount-wrap">
         <div class="amount-input-row">
-          <input type="number" class="field-input amount-field" id="amount" placeholder="0.00" min="1" step="0.01" oninput="updateFee()">
+          <input type="number" class="field-input amount-field" id="amount" placeholder="0.00" disabled>
           <span class="amount-unit">USDT</span>
         </div>
         <div class="quick-btns">
-          <button class="quick-btn" onclick="setAmount(50)">$50</button>
-          <button class="quick-btn" onclick="setAmount(100)">$100</button>
-          <button class="quick-btn max" onclick="setMax()">Max</button>
+          <button class="quick-btn" type="button" disabled>$50</button>
+          <button class="quick-btn" type="button" disabled>$100</button>
+          <button class="quick-btn max" type="button" disabled>Max</button>
         </div>
       </div>
     </div>
@@ -330,10 +335,10 @@ if ($showForm):
       <span class="fee-val" id="feeVal">—</span>
     </div>
 
-    <button class="submit-btn" id="submitBtn" onclick="openConfirm()">
+    <button class="submit-btn" id="submitBtn" type="button" disabled>
       <div class="spin" id="btnSpin"></div>
       <i class="fa-solid fa-upload" id="btnIc"></i>
-      Confirm Withdrawal
+      Currently Unavailable
     </button>
   </div>
 </div>
@@ -426,15 +431,7 @@ const CRAW_THRESHOLD = 0.30;
 let usedToday = 0;
 
 async function loadLimits() {
-  try {
-    const r = await fetch('../api/get_withdrawal_limits.php', {
-      headers: { 'Authorization': 'Bearer ' + token }
-    });
-    const d = await r.json();
-    if (d.success) {
-      usedToday = parseFloat(d.used_today ?? 0);
-    }
-  } catch(e) { /* silent */ }
+  return;
 }
 
 function updateFee() {
@@ -472,6 +469,8 @@ function closeModal() {
 }
 
 async function submitWithdrawal() {
+  showUpgradeToast('Withdrawals are currently unavailable.');
+  return;
   const addr = document.getElementById('walletAddr').value.trim();
   const amt  = parseFloat(document.getElementById('amount').value);
   const net  = document.getElementById('network').value;
@@ -524,6 +523,8 @@ async function submitWithdrawal() {
 }
 
 async function openConfirm() {
+  showUpgradeToast('Withdrawals are currently unavailable.');
+  return;
   const addrEl = document.getElementById('walletAddr');
   const amtEl  = document.getElementById('amount');
   const net    = document.getElementById('network').value;
