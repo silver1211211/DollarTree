@@ -445,7 +445,7 @@ body {
 
     <div class="lp-top">
         <a href="login.php" class="brand">
-            <img class="brand-logo-img" src="images/logotree.png" alt="Dollar Tree">
+            <img class="brand-logo-img" src="/user/images/logotree.png?v=20260812" alt="Dollar Tree">
         </a>
     </div>
 
@@ -487,7 +487,7 @@ body {
     <div class="mobile-header">
         <div class="grid-bg"></div>
         <div class="lp-tops">
-            <img class="brand-logo-img" src="images/logotree.png" alt="Dollar Tree">
+            <img class="brand-logo-img" src="/user/images/logotree.png?v=20260812" alt="Dollar Tree">
             <div class="mh-title">Start earning <span class="ac">daily returns.</span></div>
             <p class="mh-sub">Create your free investor account</p>
         </div>
