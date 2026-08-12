@@ -4,7 +4,7 @@ require_login();
 $user = get_logged_in_user();
 $page_title = t('vip','VIP');
 global $pdo;
-$stmt = $pdo->query("SELECT * FROM svip_tiers WHERE status='active' ORDER BY svip_level ASC");
+$stmt = $pdo->query("SELECT * FROM svip_tiers ORDER BY svip_level ASC");
 $tiers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <?php
@@ -154,6 +154,7 @@ body{
 .btn-unlock:hover{background:var(--gb);transform:translateY(-1px);box-shadow:0 5px 16px rgba(26,122,26,.35);}
 .btn-unlock:active{transform:none;}
 .btn-unlock i{font-size:12px;}
+.btn-unlock:disabled{background:#b8d8b8;cursor:not-allowed;box-shadow:none;transform:none;}
 
 /* Insufficient balance variant — still green but with wallet icon hint */
 .btn-unlock.needs-recharge{
@@ -347,13 +348,13 @@ body{
         <!-- ALWAYS show green unlock button regardless of balance -->
         <div class="tc-need">Cost: <strong><?php echo number_format($tier['unlock_amount'],2);?> USDT</strong></div>
         <?php if($has_balance):?>
-          <button class="btn-unlock" onclick="confirmUnlock(<?php echo $tier['svip_level'];?>,<?php echo $tier['unlock_amount'];?>)">
-            <i class="fa-solid fa-lock-open"></i>Unlock now
+          <button class="btn-unlock" type="button" disabled title="VIP unlocking is currently unavailable">
+            <i class="fa-solid fa-lock"></i>Currently unavailable
           </button>
         <?php else:?>
           <!-- Insufficient balance — still shows green btn, triggers recharge sheet -->
-          <button class="btn-unlock needs-recharge" onclick="showRecharge(<?php echo $tier['svip_level'];?>,<?php echo $tier['unlock_amount'];?>,<?php echo $shortfall;?>)">
-            <i class="fa-solid fa-lock-open"></i>Unlock now
+          <button class="btn-unlock needs-recharge" type="button" disabled title="VIP unlocking is currently unavailable">
+            <i class="fa-solid fa-lock"></i>Currently unavailable
           </button>
         <?php endif;?>
       <?php endif;?>

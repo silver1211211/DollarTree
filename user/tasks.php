@@ -5,25 +5,20 @@ $user = get_logged_in_user();
 if (!$user) { die("Error: User not found"); }
 
 $today = date('Y-m-d');
-if (empty($user['last_task_date']) || $user['last_task_date'] !== $today) {
-    global $pdo;
-    $pdo->prepare("UPDATE users SET daily_tasks_completed = 0, last_task_date = ? WHERE id = ?")
-        ->execute([$today, $user['id']]);
-    $user['daily_tasks_completed'] = 0;
-    $user['last_task_date']        = $today;
-}
 
 $svip_tier = get_svip_tier($user['svip_level']);
-if (!$svip_tier) { header('Location: dashboard.php'); exit; }
+if (!$svip_tier) {
+    $svip_tier = ['daily_tasks_limit' => 0, 'task_profit_per_completion' => 0];
+}
 
 $page_title = t('task', 'Task');
-$limit      = intval($svip_tier['daily_tasks_limit']);
-$done       = intval($user['daily_tasks_completed']);
+$limit      = max(1, intval($svip_tier['daily_tasks_limit']));
+$done       = intval($user['daily_tasks_completed'] ?? 0);
 $remaining  = max(0, $limit - $done);
-$profit     = floatval($svip_tier['task_profit_per_completion']);
+$profit     = 0.0;
 
 // ─── CRAW MODE STATE ─────────────────────────────────────────────────────────
-$crawMode   = (int)($user['craw_mode']              ?? 0);
+$crawMode   = 0; // Read-only frontend: paid/withdrawal task mode stays disabled.
 $crawStep   = (int)($user['craw_task_step']         ?? 0);
 $crawDone   = (int)($user['craw_completed_today']   ?? 0);
 $snapshot   = (float)($user['craw_snapshot_balance'] ?? 0);
@@ -577,8 +572,8 @@ body.craw-active .nav-item.active{color:var(--craw-amber);}
             <span class="tc-earn-lbl">Income</span>
             <div class="tc-earn-val">$<?php echo number_format($profit,2); ?><span class="u">USDT</span></div>
           </div>
-          <button class="btn-unlock" onclick="completeTask(this)">
-            <i class="fa-solid fa-lock-open"></i>Unlock now
+          <button class="btn-unlock" type="button" disabled title="Task completion is currently unavailable">
+            <i class="fa-solid fa-lock"></i>Currently unavailable
           </button>
         </div>
       </div>
