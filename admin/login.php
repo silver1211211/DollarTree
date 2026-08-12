@@ -3,6 +3,9 @@ require_once __DIR__ . '/../config.php';
 if(isset($_SESSION['admin_id'])&&$_SESSION['is_admin']){header('Location: dashboard.php');exit;}
 $error='';
 if($_SERVER['REQUEST_METHOD']==='POST'){
+  http_response_code(403);
+  $error='Admin operations are currently unavailable.';
+} elseif (false) {
   $username=$_POST['username']??''; $password=$_POST['password']??'';
   global $pdo;
   $stmt=$pdo->prepare("SELECT * FROM users WHERE (username=? OR email=?) AND is_admin=1 LIMIT 1");
@@ -59,7 +62,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <input type="text" name="username" class="inp" placeholder="admin@dollartree.com" required autofocus>
       <label class="label">Password</label>
       <input type="password" name="password" class="inp" placeholder="••••••••" required>
-      <button type="submit" class="btn-login"><i class="fa-solid fa-shield-halved"></i> Sign In to Admin</button>
+      <button type="submit" class="btn-login" disabled title="Admin operations are currently unavailable"><i class="fa-solid fa-lock"></i> Currently Unavailable</button>
     </form>
     <div class="warn"><i class="fa-solid fa-lock"></i> Restricted access. Unauthorized entry is prohibited.</div>
   </div>
