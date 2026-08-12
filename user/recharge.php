@@ -359,7 +359,7 @@ include __DIR__ . '/spin_wheel.php';
         <?php foreach ($depositAssets as $asset): ?>
         <button class="network-btn" onclick="selectAsset(<?php echo htmlspecialchars(json_encode($asset['canonical_code']), ENT_QUOTES, 'UTF-8'); ?>,this)">
             <?php $iconSlug = $coinIcons[$asset['symbol']] ?? strtolower($asset['symbol']) . '-' . strtolower($asset['symbol']); ?>
-            <img class="coin-icon" src="<?php echo $asset['symbol'] === 'NOT' ? 'images/coins/not.png' : 'https://cryptologos.cc/logos/' . htmlspecialchars($iconSlug) . '-logo.png?v=040'; ?>" alt="<?php echo htmlspecialchars($asset['symbol']); ?> logo" loading="lazy" onerror="this.onerror=null;this.src='images/tree.jpg'">
+            <img class="coin-icon" src="<?php echo $asset['symbol'] === 'NOT' ? '/user/images/coins/not.png?v=20260812' : 'https://cryptologos.cc/logos/' . htmlspecialchars($iconSlug) . '-logo.png?v=040'; ?>" alt="<?php echo htmlspecialchars($asset['symbol']); ?> logo" loading="lazy" onerror="this.onerror=null;this.src='/user/images/tree.jpg?v=20260812'">
             <?php echo htmlspecialchars($asset['symbol'] . ' · ' . $asset['network_name']); ?>
         </button>
         <?php endforeach; ?>
@@ -412,7 +412,7 @@ include __DIR__ . '/spin_wheel.php';
                 <div>Only send the selected coin through its displayed network. A different coin or network may be lost permanently.</div>
             </div>
             <div class="instruction-item">
-                <i class="fa-solid fa-arrow-down-to-line"></i>
+                <i class="fa-solid fa-download"></i>
                 <div><?php echo t('minimum_deposit','The converted amount must be at least 2 USDT. Smaller amounts will not be credited.'); ?></div>
             </div>
             <div class="instruction-item">

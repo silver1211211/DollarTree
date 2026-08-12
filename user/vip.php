@@ -18,7 +18,7 @@ include __DIR__ . '/spin_wheel.php';
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title><?php echo $page_title;?> — Dollar Tree</title>
-<link rel="icon" type="image/jpeg" href="images/tree.jpg">
+<link rel="icon" type="image/jpeg" href="/user/images/tree.jpg?v=20260812">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
@@ -265,7 +265,7 @@ body{
 
 <div class="topbar">
   <div class="tb-left">
-    <img class="tb-logo" src="images/tree.jpg" alt="Dollar Tree">
+    <img class="tb-logo" src="/user/images/logotree.png?v=20260812" alt="Dollar Tree">
     <span class="tb-title">VIP Levels</span>
   </div>
  
@@ -279,7 +279,7 @@ body{
       <div class="lvl-name">SVIP <?php echo htmlspecialchars($user['svip_level']);?></div>
       <div class="lvl-bal">Balance: <strong><?php echo number_format($user['balance'],2);?> USDT</strong></div>
     </div>
-    <div class="lvl-tree"><img src="images/tree.jpg" alt="Tree"></div>
+    <div class="lvl-tree"><img src="/user/images/tree.jpg?v=20260812" alt="Tree"></div>
   </div>
 </div>
 
@@ -299,7 +299,7 @@ body{
     <div class="step-ribbon"><span>Step <?php echo $tier['svip_level'];?></span></div>
 
     <div class="tc-top">
-      <div class="tc-img"><img src="images/tree.jpg" alt="SVIP <?php echo $tier['svip_level'];?>"></div>
+      <div class="tc-img"><img src="/user/images/tree.jpg?v=20260812" alt="SVIP <?php echo $tier['svip_level'];?>"></div>
       <div class="tc-meta">
         <div class="tc-name">SVIP <?php echo $tier['svip_level'];?></div>
         <?php if($is_current || $is_below):?>

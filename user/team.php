@@ -17,7 +17,7 @@ include __DIR__ . '/spin_wheel.php';
 <title><?php echo $page_title; ?> — Dollar Tree</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="icon" type="image/jpeg" href="images/tree.jpg">
+<link rel="icon" type="image/jpeg" href="/user/images/tree.jpg?v=20260812">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 :root {
@@ -143,7 +143,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--tp);min-he
   <div class="htopbar">
     <div class="htb-brand">
       <div class="htb-dot"></div>
-     <img class="tb-logo" src="images/logotree.png" alt="Dollar Tree">
+     <img class="tb-logo" src="/user/images/logotree.png?v=20260812" alt="Dollar Tree">
     </div>
     <!--<button class="lang-btn"><i class="fa-solid fa-globe"></i> English <i class="fa-solid fa-chevron-down"></i></button>-->
   </div>

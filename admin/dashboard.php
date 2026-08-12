@@ -72,7 +72,7 @@ function status_badge($s){
     <div class="sc-sub <?php echo $pending_d_cnt>0?'warn':'';?>">
       <i class="fa-solid fa-clock"></i> <?php echo $pending_d_cnt;?> pending
     </div>
-    <i class="fa-solid fa-arrow-down-to-line sc-bg-icon"></i>
+    <i class="fa-solid fa-download sc-bg-icon"></i>
   </div>
   <div class="stat-card">
     <div class="sc-lbl">Withdrawn</div>
@@ -80,7 +80,7 @@ function status_badge($s){
     <div class="sc-sub <?php echo $pending_w_cnt>0?'warn':'';?>">
       <i class="fa-solid fa-clock"></i> $<?php echo number_format($pending_w_amt,0);?> pending
     </div>
-    <i class="fa-solid fa-arrow-up-from-line sc-bg-icon"></i>
+    <i class="fa-solid fa-upload sc-bg-icon"></i>
   </div>
   <div class="stat-card">
     <div class="sc-lbl">Crawl Active</div>
@@ -99,7 +99,7 @@ function status_badge($s){
 <div class="dash-grid-2">
   <div class="card">
     <div class="card-head">
-      <div class="card-title"><i class="fa-solid fa-arrow-down-to-line"></i> Recent Deposits</div>
+      <div class="card-title"><i class="fa-solid fa-download"></i> Recent Deposits</div>
       <a href="deposits.php" class="btn btn-ghost btn-xs">View All</a>
     </div>
     <div class="table-wrap">
@@ -132,7 +132,7 @@ function status_badge($s){
   </div>
   <div class="card">
     <div class="card-head">
-      <div class="card-title"><i class="fa-solid fa-arrow-up-from-line"></i> Recent Withdrawals</div>
+      <div class="card-title"><i class="fa-solid fa-upload"></i> Recent Withdrawals</div>
       <a href="withdrawals.php" class="btn btn-ghost btn-xs">View All</a>
     </div>
     <div class="table-wrap">

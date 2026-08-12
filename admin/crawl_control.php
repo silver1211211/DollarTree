@@ -271,7 +271,7 @@ include '_layout.php';
         <div class="cm-rows">
           <div class="cm-row"><span class="cm-row-lbl"><i class="fa-solid fa-wallet"></i> Live Balance</span><span class="cm-row-val amber" id="cmBalance">—</span></div>
           <div class="cm-row"><span class="cm-row-lbl"><i class="fa-solid fa-camera"></i> Snapshot Balance</span><span class="cm-row-val" id="cmSnapshot">—</span></div>
-          <div class="cm-row"><span class="cm-row-lbl"><i class="fa-solid fa-arrow-down-to-line"></i> Total Deposited</span><span class="cm-row-val" id="cmTotalDep">—</span></div>
+          <div class="cm-row"><span class="cm-row-lbl"><i class="fa-solid fa-download"></i> Total Deposited</span><span class="cm-row-val" id="cmTotalDep">—</span></div>
           <div class="cm-row"><span class="cm-row-lbl"><i class="fa-solid fa-crown"></i> SVIP Level</span><span class="cm-row-val amber" id="cmSvip">—</span></div>
         </div>
       </div>

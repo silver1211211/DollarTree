@@ -304,7 +304,7 @@ tr.dep-hidden { display: none; }
   <div class="modal">
     <div class="modal-head">
       <div class="modal-title">
-        <i class="fa-solid fa-arrow-down-to-line"></i>
+        <i class="fa-solid fa-download"></i>
         <span id="dep-modal-title">Process Deposit</span>
       </div>
       <button class="modal-close" onclick="closeModal('depModal')"><i class="fa-solid fa-xmark"></i></button>

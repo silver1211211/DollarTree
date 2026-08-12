@@ -49,7 +49,7 @@ document.documentElement.classList.add('fonts-loading');
     }
 }());
 </script>
-<link rel="icon" type="image/jpeg" href="images/tree.jpg">
+<link rel="icon" type="image/jpeg" href="/user/images/tree.jpg?v=20260812">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">

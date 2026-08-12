@@ -22,7 +22,7 @@ include __DIR__ . '/spin_wheel.php';
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title><?php echo $page_title;?> — Dollar Tree</title>
-<link rel="icon" type="image/jpeg" href="images/tree.jpg">
+<link rel="icon" type="image/jpeg" href="/user/images/tree.jpg?v=20260812">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
@@ -568,7 +568,7 @@ canvas#spinWheel{position:relative;z-index:2;width:240px;height:240px;border-rad
 
 <div class="topbar">
   <div class="tb-left">
-    <img class="tb-logo" src="images/logotree.png" alt="Dollar Tree">
+    <img class="tb-logo" src="/user/images/logotree.png?v=20260812" alt="Dollar Tree">
     <div class="tb-div"></div>
     <div class="tb-greet">
       <div class="tb-top"><?php echo t('hello','Hello');?> 👋</div>
@@ -709,7 +709,7 @@ canvas#spinWheel{position:relative;z-index:2;width:240px;height:240px;border-rad
     <div class="step-ribbon"><span>Step <?php echo $tier['svip_level'];?></span></div>
 
     <div class="tc-top">
-      <div class="tc-img"><img src="images/tree.jpg" alt="SVIP <?php echo $tier['svip_level'];?>"></div>
+      <div class="tc-img"><img src="/user/images/tree.jpg?v=20260812" alt="SVIP <?php echo $tier['svip_level'];?>"></div>
       <div class="tc-meta">
         <div class="tc-name">SVIP <?php echo $tier['svip_level'];?></div>
         <?php if($is_current || $is_below):?>

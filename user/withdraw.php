@@ -292,7 +292,7 @@ if ($showForm):
 ?>
 
 <div class="form-card">
-  <div class="form-hd"><i class="fa-solid fa-arrow-up-from-line"></i>Withdrawal Details</div>
+  <div class="form-hd"><i class="fa-solid fa-upload"></i>Withdrawal Details</div>
   <div class="form-body">
 
     <div class="field">
@@ -332,7 +332,7 @@ if ($showForm):
 
     <button class="submit-btn" id="submitBtn" onclick="openConfirm()">
       <div class="spin" id="btnSpin"></div>
-      <i class="fa-solid fa-arrow-up-from-line" id="btnIc"></i>
+      <i class="fa-solid fa-upload" id="btnIc"></i>
       Confirm Withdrawal
     </button>
   </div>
@@ -354,7 +354,7 @@ if ($showForm):
 <!-- CONFIRM MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
-    <div class="modal-ic"><i class="fa-solid fa-arrow-up-from-line"></i></div>
+    <div class="modal-ic"><i class="fa-solid fa-upload"></i></div>
     <div class="modal-title">Confirm Withdrawal</div>
     <div class="modal-sub">Please review the details below before submitting.</div>
     <div class="modal-detail">

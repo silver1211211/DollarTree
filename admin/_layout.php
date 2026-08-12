@@ -372,11 +372,11 @@ textarea.form-control{resize:vertical;min-height:85px;font-size:14px;}
     <a href="crawl_control.php" class="nav-link <?php echo $active_nav==='crawl'?'active':''; ?>" onclick="closeSidebar()"><i class="fa-solid fa-spider"></i> Crawl Control</a>
     <div class="sb-section">Finance</div>
     <a href="deposits.php" class="nav-link <?php echo $active_nav==='deposits'?'active':''; ?>" onclick="closeSidebar()">
-      <i class="fa-solid fa-arrow-down-to-line"></i> Deposits
+      <i class="fa-solid fa-download"></i> Deposits
       <?php global $pdo; try{$pd=(int)$pdo->query("SELECT COUNT(*) FROM deposits WHERE status='pending'")->fetchColumn();if($pd>0)echo "<span class='nav-badge'>{$pd}</span>";}catch(Exception $e){} ?>
     </a>
     <a href="withdrawals.php" class="nav-link <?php echo $active_nav==='withdrawals'?'active':''; ?>" onclick="closeSidebar()">
-      <i class="fa-solid fa-arrow-up-from-line"></i> Withdrawals
+      <i class="fa-solid fa-upload"></i> Withdrawals
       <?php try{$pw=(int)$pdo->query("SELECT COUNT(*) FROM withdrawals WHERE status='pending'")->fetchColumn();if($pw>0)echo "<span class='nav-badge'>{$pw}</span>";}catch(Exception $e){} ?>
     </a>
     <a href="commissions.php" class="nav-link <?php echo $active_nav==='commissions'?'active':''; ?>" onclick="closeSidebar()"><i class="fa-solid fa-percent"></i> Commissions</a>
@@ -403,11 +403,11 @@ textarea.form-control{resize:vertical;min-height:85px;font-size:14px;}
   <div class="bn-inner">
     <a href="dashboard.php" class="bn-item <?php echo $active_nav==='dashboard'?'active':''; ?>"><i class="fa-solid fa-gauge-high"></i><span>Home</span></a>
     <a href="deposits.php" class="bn-item <?php echo $active_nav==='deposits'?'active':''; ?>">
-      <i class="fa-solid fa-arrow-down-to-line"></i><span>Deposits</span>
+      <i class="fa-solid fa-download"></i><span>Deposits</span>
       <?php try{$pd=(int)$pdo->query("SELECT COUNT(*) FROM deposits WHERE status='pending'")->fetchColumn();if($pd>0)echo "<span class='bn-badge'>{$pd}</span>";}catch(Exception $e){} ?>
     </a>
     <a href="withdrawals.php" class="bn-item <?php echo $active_nav==='withdrawals'?'active':''; ?>">
-      <i class="fa-solid fa-arrow-up-from-line"></i><span>Withdraw</span>
+      <i class="fa-solid fa-upload"></i><span>Withdraw</span>
       <?php try{$pw=(int)$pdo->query("SELECT COUNT(*) FROM withdrawals WHERE status='pending'")->fetchColumn();if($pw>0)echo "<span class='bn-badge'>{$pw}</span>";}catch(Exception $e){} ?>
     </a>
     <a href="users.php" class="bn-item <?php echo $active_nav==='users'?'active':''; ?>"><i class="fa-solid fa-users"></i><span>Users</span></a>

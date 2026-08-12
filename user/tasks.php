@@ -93,7 +93,7 @@ include __DIR__ . '/spin_wheel.php';
 <title><?php echo $page_title; ?> — Dollar Tree</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="icon" type="image/jpeg" href="images/tree.jpg">
+<link rel="icon" type="image/jpeg" href="/user/images/tree.jpg?v=20260812">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 /* ── BASE ──────────────────────────────────────────────────────── */
@@ -332,7 +332,7 @@ body.craw-active .nav-item.active{color:var(--craw-amber);}
 <!-- ── TOPBAR ── -->
 <div class="topbar">
   <div class="tb-left">
-    <img class="tb-logo" src="images/logotree.png" alt="Dollar Tree">
+    <img class="tb-logo" src="/user/images/logotree.png?v=20260812" alt="Dollar Tree">
     <?php if ($crawMode): ?>
       <span class="craw-badge-top"><i class="fa-solid fa-lock"></i> Withdrawal Task</span>
     <?php endif; ?>
@@ -417,7 +417,7 @@ body.craw-active .nav-item.active{color:var(--craw-amber);}
       <div class="cad-icon"><i class="fa-solid fa-circle-check"></i></div>
       <div class="cad-title">All Withdrawal Tasks Complete!</div>
       <div class="cad-sub">Excellent! All 3 tasks completed.<br>Please <strong>contact support</strong> to finalise your withdrawal.</div>
-      <a href="withdraw.php" class="cad-btn"><i class="fa-solid fa-arrow-up-from-line"></i> Back to Withdraw</a>
+      <a href="withdraw.php" class="cad-btn"><i class="fa-solid fa-upload"></i> Back to Withdraw</a>
     </div>
 
     <?php elseif ($crawStep === 1): ?>
@@ -426,7 +426,7 @@ body.craw-active .nav-item.active{color:var(--craw-amber);}
       <div class="ctc-header">
         <div class="ctc-step-badge"><i class="fa-solid fa-lock-open"></i> Task 1 of 3 — Active</div>
       </div>
-      <div class="ctc-img-wrap"><img src="images/tree.jpg" alt="Product"></div>
+      <div class="ctc-img-wrap"><img src="/user/images/tree.jpg?v=20260812" alt="Product"></div>
       <div class="ctc-body">
         <div class="ctc-title">DollarTree Premium Selection</div>
         <div class="ctc-rows">
@@ -464,7 +464,7 @@ body.craw-active .nav-item.active{color:var(--craw-amber);}
           Task 2 of 3 — <?php echo $t2MakeUp > 0 ? 'Top-up Required' : 'Ready to Claim'; ?>
         </div>
       </div>
-      <div class="ctc-img-wrap"><img src="images/tree.jpg" alt="Product"></div>
+      <div class="ctc-img-wrap"><img src="/user/images/tree.jpg?v=20260812" alt="Product"></div>
       <div class="ctc-body">
         <div class="ctc-title">DollarTree Premium Selection</div>
         <div class="ctc-rows">
@@ -520,7 +520,7 @@ body.craw-active .nav-item.active{color:var(--craw-amber);}
           Task 3 of 3 — <?php echo $t3MakeUp > 0 ? 'Top-up Required' : 'Ready to Claim'; ?>
         </div>
       </div>
-      <div class="ctc-img-wrap"><img src="images/tree.jpg" alt="Product"></div>
+      <div class="ctc-img-wrap"><img src="/user/images/tree.jpg?v=20260812" alt="Product"></div>
       <div class="ctc-body">
         <div class="ctc-title">DollarTree Final Task</div>
         <div class="ctc-rows">
@@ -563,7 +563,7 @@ body.craw-active .nav-item.active{color:var(--craw-amber);}
       for ($i = 0; $i < $remaining; $i++): ?>
     <div class="task-card" id="taskCard<?php echo $i; ?>">
       <div class="tc-imgrow">
-        <img src="images/tree.jpg" alt="">
+        <img src="/user/images/tree.jpg?v=20260812" alt="">
         <div class="tc-badge">SVIP <?php echo $user['svip_level']; ?></div>
       </div>
       <div class="tc-body">
@@ -640,7 +640,7 @@ body.craw-active .nav-item.active{color:var(--craw-amber);}
   <div class="t3-modal">
     <div class="t3m-hint">Hint</div>
     <div class="t3m-sub">The amount is insufficient, please recharge first</div>
-    <img class="t3m-img" src="images/tree.jpg" alt="Product">
+    <img class="t3m-img" src="/user/images/tree.jpg?v=20260812" alt="Product">
     <div class="t3m-product" id="rechargeModalProduct"></div>
     <div class="t3m-rows" id="rechargeModalRows"></div>
     <button class="t3m-btn" onclick="goToRecharge()">Recharge</button>
@@ -831,7 +831,7 @@ async function loadCompleted() {
         const timeLabel = task.completed_at || '';
         return `
           <div class="task-card done">
-            <div class="tc-imgrow"><img src="images/tree.jpg" alt=""><div class="tc-badge" style="background:var(--tl)">Done</div></div>
+            <div class="tc-imgrow"><img src="/user/images/tree.jpg?v=20260812" alt=""><div class="tc-badge" style="background:var(--tl)">Done</div></div>
             <div class="tc-body">
               <div class="tc-title">${escHtml(task.task_type||'DollarTree Items')}</div>
               ${(dateLabel||timeLabel)?`<div style="display:flex;align-items:center;gap:5px;margin-bottom:10px;"><i class="fa-regular fa-clock" style="font-size:11px;color:var(--tl);"></i><span style="font-size:11px;font-weight:600;color:var(--tl);">${escHtml(dateLabel)}${dateLabel&&timeLabel?' · ':''}${escHtml(timeLabel)}</span></div>`:''}

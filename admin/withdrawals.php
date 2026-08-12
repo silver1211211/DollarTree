@@ -301,7 +301,7 @@ include '_layout.php';
 <div class="modal-overlay" id="wModal" onclick="if(event.target===this)closeModal('wModal')">
   <div class="modal">
     <div class="modal-head">
-      <div class="modal-title"><i class="fa-solid fa-arrow-up-from-line"></i> <span id="w-modal-title">Process Withdrawal</span></div>
+      <div class="modal-title"><i class="fa-solid fa-upload"></i> <span id="w-modal-title">Process Withdrawal</span></div>
       <button class="modal-close" onclick="closeModal('wModal')"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <form method="POST">
