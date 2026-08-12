@@ -7,7 +7,7 @@ $page_title = t('home','Home');
 $svip_tier = get_svip_tier($user['svip_level']);
 
 global $pdo;
-$stmt = $pdo->query("SELECT * FROM svip_tiers WHERE status='active' ORDER BY svip_level ASC");
+$stmt = $pdo->query("SELECT * FROM svip_tiers ORDER BY svip_level ASC");
 $tiers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -404,6 +404,7 @@ canvas#spinWheel{position:relative;z-index:2;width:240px;height:240px;border-rad
 }
 .btn-unlock:hover{background:var(--gb);transform:translateY(-1px);box-shadow:0 5px 16px rgba(26,122,26,.35);}
 .btn-unlock:active{transform:none;}
+.btn-unlock:disabled{background:#b8d8b8;cursor:not-allowed;box-shadow:none;transform:none;}
 .btn-current{
   display:flex;align-items:center;gap:7px;background:rgba(26,122,26,.10);
   color:var(--gp);border:1px solid rgba(26,122,26,.22);border-radius:100px;
@@ -755,15 +756,9 @@ canvas#spinWheel{position:relative;z-index:2;width:240px;height:240px;border-rad
         <div class="btn-done"><i class="fa-solid fa-check"></i>Completed</div>
       <?php else:?>
         <div class="tc-need">Cost: <strong><?php echo number_format($tier['unlock_amount'],2);?> USDT</strong></div>
-        <?php if($has_balance):?>
-          <button class="btn-unlock" onclick="dashConfirmUnlock(<?php echo $tier['svip_level'];?>,<?php echo $tier['unlock_amount'];?>)">
-            <i class="fa-solid fa-lock-open"></i>Unlock now
-          </button>
-        <?php else:?>
-          <button class="btn-unlock needs-recharge" onclick="dashShowRecharge(<?php echo $tier['svip_level'];?>,<?php echo $tier['unlock_amount'];?>,<?php echo $shortfall;?>)">
-            <i class="fa-solid fa-lock-open"></i>Unlock now
-          </button>
-        <?php endif;?>
+        <button class="btn-unlock" type="button" disabled title="VIP unlocking is currently unavailable">
+          <i class="fa-solid fa-lock"></i>Currently unavailable
+        </button>
       <?php endif;?>
     </div>
   </div>
