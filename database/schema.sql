@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS svip_tiers (
     daily_tasks_limit INT DEFAULT 1,
     task_profit_per_completion DECIMAL(20, 2) NOT NULL,
     contract_duration_days INT DEFAULT 90,
-    status ENUM('active', 'inactive') DEFAULT 'active',
+    status ENUM('active', 'inactive') DEFAULT 'inactive',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS svip_tiers (
 -- INSERT DEFAULT SVIP TIERS
 -- ============================================
 INSERT INTO svip_tiers (svip_level, unlock_amount, max_daily_profit, daily_tasks_limit, task_profit_per_completion) VALUES
-(0, 0.00, 1.30, 1, 1.30),
+(0, 0.00, 0.00, 0, 0.00),
 (1, 16.00, 9.00, 1, 9.00),
 (2, 66.00, 38.00, 1, 38.00),
 (3, 166.00, 98.00, 1, 98.00),
@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS user_deposit_addresses (
     address VARCHAR(255) NOT NULL,
     memo VARCHAR(100) DEFAULT NULL,
     track_id VARCHAR(100) DEFAULT NULL,
-    status ENUM('active', 'inactive') DEFAULT 'active',
+    status ENUM('active', 'inactive') DEFAULT 'inactive',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     last_used_at DATETIME DEFAULT NULL,
     
@@ -316,7 +316,7 @@ CREATE TABLE IF NOT EXISTS referral_settings (
     id INT AUTO_INCREMENT PRIMARY KEY,
     level INT NOT NULL UNIQUE,
     commission_rate DECIMAL(5, 4) NOT NULL,
-    status ENUM('active', 'inactive') DEFAULT 'active',
+    status ENUM('active', 'inactive') DEFAULT 'inactive',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -346,7 +346,7 @@ CREATE TABLE IF NOT EXISTS admin_settings (
 INSERT INTO admin_settings (setting_key, setting_value, setting_description) VALUES
 ('platform_name', 'DollarTree', 'Platform name'),
 ('oxapay_api_key', '', 'OxaPay merchant API key'),
-('oxapay_enabled', '1', 'Enable/disable cryptocurrency deposits'),
+('oxapay_enabled', '0', 'Enable/disable cryptocurrency deposits'),
 ('min_deposit_amount', '2', 'Minimum deposit amount in USDT'),
 ('min_withdrawal_amount', '9', 'Minimum withdrawal amount in USDT'),
 ('withdrawal_fee_percentage', '0', 'Withdrawal fee percentage'),
@@ -395,15 +395,6 @@ CREATE TABLE IF NOT EXISTS activity_logs (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ============================================
--- CREATE DEFAULT ADMIN ACCOUNT
--- Username: admin
--- Password: admin123 (CHANGE THIS IMMEDIATELY)
--- ============================================
-INSERT INTO users (username, email, password_hash, referral_code, is_admin, account_status) VALUES
-('admin', 'admin@dollartree.local', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'ADMIN001', TRUE, 'active');
--- Password: admin123
-
--- ============================================
 -- VIEWS FOR REPORTING
 -- ============================================
 
@@ -435,5 +426,3 @@ GROUP BY u.id;
 -- ============================================
 CREATE INDEX idx_users_created_at ON users(created_at);
 CREATE INDEX idx_deposits_created_at ON deposits(created_at);
-CREATE INDEX idx_withdrawals_requested_at ON withdrawals(requested_at);
-CREATE INDEX idx_commissions_created_at ON commissions(created_at);

@@ -22,9 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // ─────────────────────────────────────────────
 // CONFIG
 // ── FIX 1: Hardcoded fallback key removed ────
-// The old code had:
-//   get_setting('oxapay_payout_api_key', 'I1HA93-HFHCIC-K9QYFE-QYPMLT')
-// That exposed your real API key in source code. If there is no key in
+// A previous revision used a hard-coded fallback credential.
+// If there is no key in
 // the DB we now fail loudly instead of silently using the hardcoded one.
 // ─────────────────────────────────────────────
 $OXAPAY_PAYOUT_API_KEY = get_setting('oxapay_payout_api_key', '');

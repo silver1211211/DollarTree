@@ -1,5 +1,15 @@
 
 # Local/runtime files
 *.zip
+*.sql.gz
+*.dump
+*.bak
+*.env
+.env.*
 logs/
 error_log
+/test/dollar-tree-platform/
+/test.php
+/test_file.php
+/api/show_table.php
+/.htaccess_old

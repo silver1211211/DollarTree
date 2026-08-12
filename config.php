@@ -25,18 +25,42 @@ if (session_status() === PHP_SESSION_NONE) {
 // ============================================
 // DATABASE CONFIGURATION
 // ============================================
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'dollartr_dollar_tree_db');
-define('DB_USER', 'dollartr_dollar_tree');
-define('DB_PASS', 'dollar_tree_db');
+$externalConfig = [];
+$externalConfigFile = getenv('DOLLARTREE_CONFIG_FILE') ?: '/etc/dollartree/config.php';
+if (is_readable($externalConfigFile)) {
+    $loadedConfig = require $externalConfigFile;
+    if (is_array($loadedConfig)) {
+        $externalConfig = $loadedConfig;
+    }
+}
+
+function required_config_value(string $key): string {
+    global $externalConfig;
+    $value = $externalConfig[$key] ?? getenv($key);
+    if ($value === false || $value === null || $value === '') {
+        throw new RuntimeException("Required configuration is missing: {$key}");
+    }
+    return (string)$value;
+}
+
+define('DB_HOST', required_config_value('DB_HOST'));
+define('DB_NAME', required_config_value('DB_DATABASE'));
+define('DB_USER', required_config_value('DB_USERNAME'));
+define('DB_PASS', required_config_value('DB_PASSWORD'));
 define('DB_CHARSET', 'utf8mb4');
 
 // ============================================
 // PLATFORM CONFIGURATION
 // ============================================
 define('PLATFORM_NAME', 'DollarTree');
-define('PLATFORM_URL', 'http://127.0.0.1:8000/');
-define('ADMIN_EMAIL', 'admin@dollartree.local');
+define('PLATFORM_URL', rtrim($externalConfig['PLATFORM_URL'] ?? getenv('PLATFORM_URL') ?: 'https://dollartreeofficial.online', '/') . '/');
+define('ADMIN_EMAIL', $externalConfig['ADMIN_EMAIL'] ?? getenv('ADMIN_EMAIL') ?: 'admin@dollartreeofficial.online');
+
+// Real-money and investment-return operations are disabled by default.
+define('FINANCIAL_FEATURES_ENABLED', filter_var(
+    $externalConfig['FINANCIAL_FEATURES_ENABLED'] ?? getenv('FINANCIAL_FEATURES_ENABLED') ?: false,
+    FILTER_VALIDATE_BOOL
+));
 
 // ============================================
 // SECURITY SETTINGS
